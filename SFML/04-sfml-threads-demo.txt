@@ -1,0 +1,167 @@
+=============== threading.cpp ===================
+#include "threading.h"
+
+using namespace sf;
+
+/*
+	Produces a 500 x 500 window.
+	Color = Magenta
+	Position = (0,10)
+*/
+void windowA()
+{
+	RenderWindow window(VideoMode(500, 500), "Window A"); // Style defaults to sf::Style::Default
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	// Setting position
+	window.setPosition(Vector2i(0, 10));
+
+	// Clearing screen
+	window.clear(Color::Magenta);
+	window.display();
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::Closed) window.close();
+			else if (evnt.type == Event::MouseLeft) std::cout << "Mouse left Window A\n";
+			else if (evnt.type == Event::MouseEntered) std::cout << "Mouse entered Window A\n";
+		}
+		window.clear(Color::Magenta);
+		window.display();
+	}
+}
+
+/*
+	Produces a 500 x 500 window.
+	Color = Blue
+	Position = (500,10)
+*/
+void windowB()
+{
+	RenderWindow window(VideoMode(500, 500), "Window B"); // Style defaults to sf::Style::Default
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	// Setting position
+	// Shift x-axis by 500; 0+500 = 500
+	window.setPosition(Vector2i(500, 10));
+
+	// Clearing screen
+	window.clear(Color::Blue);
+	window.display();
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::Closed) window.close();
+			else if (evnt.type == Event::MouseLeft) std::cout << "Mouse left Window B\n";
+			else if (evnt.type == Event::MouseEntered) std::cout << "Mouse entered Window B\n";
+		}
+		window.clear(Color::Blue);
+		window.display();
+	}
+}
+
+/*
+	Produces a 500 x 500 window.
+	Color = Green
+	Position = (1000,10)
+*/
+void windowC()
+{
+	RenderWindow window(VideoMode(500, 500), "Window C"); // Style defaults to sf::Style::Default
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	// Setting position
+	// 0 + 500 +500 = 1000
+	window.setPosition(Vector2i(1000, 10));
+
+	// Clearing screen
+	window.clear(Color::Green);
+	window.display();
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::Closed) window.close();
+			else if (evnt.type == Event::MouseLeft) std::cout << "Mouse left Window C\n";
+			else if (evnt.type == Event::MouseEntered) std::cout << "Mouse entered Window C\n";
+		}
+		window.clear(Color::Green);
+		window.display();
+	}
+}
+
+/*
+	Demonstrates the basic outline of a draw window function
+	Introduces the idea of Wrapper functions
+*/
+void demo_wrapper(const char* Title, int Width, int Height)
+{
+	RenderWindow window(VideoMode(Width, Height), Title);
+
+	window.setFramerateLimit(60);
+
+	window.clear();
+	window.display();
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			// Can use if-else too
+			// Just feel that switch is more elegant
+			switch (evnt.type)
+			{
+			case Event::Closed:
+				window.close();
+			}
+		}
+		window.clear();
+		window.display();
+	}
+}
+
+=============== threading.h ===================
+#pragma once
+#include <SFML/Graphics.hpp>
+#include <thread> // for std::thread
+#include <iostream> // for std::cout
+
+using namespace sf;
+
+// Declare your functions
+void windowA();
+void windowB();
+void windowC();
+void demo_wrapper(const char* Title, int Width, int Height);
+
+=============== main.cpp ===================
+#include "threading.h"
+
+int main()
+{
+	// For issuing threads
+	std::thread threadA(windowA);
+	std::thread threadB(windowB);
+	std::thread threadC(windowC);
+	
+	threadA.join();
+	threadB.join();
+	threadC.join();
+	
+	return 0;
+}

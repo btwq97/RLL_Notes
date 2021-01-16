@@ -1,0 +1,10 @@
+Lesson		About
+------		-----
+1		Summarise on C++. Test on a few concepts such as writing a funtion, compiling and displaying answers.
+2		Download VSC + Live Server Extension, create account for codepen.io. Introduce HTML and CSS as Frontend languages.
+3-8		HTML basics 
+9-13		CSS basics
+13-15		Buffer
+15-17		Project 1: Simple Recipe
+18-20		Project 2: Cool Project?
+

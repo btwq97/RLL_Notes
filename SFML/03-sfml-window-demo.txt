@@ -1,0 +1,253 @@
+#include "window-demo.h"
+
+
+void show_Window()
+{
+	// Init window
+	// Width = 800
+	// Height = 600
+	// Window Name = Window demo
+	Window window(VideoMode(800, 600), "Window Demo", Style::Default);
+	
+	// Setting Framerate
+	window.setFramerateLimit(60);
+}
+
+void show_RenderWindow()
+{
+	// Init window
+	// Width = 800
+	// Height = 600
+	// Window Name = Window demo
+	RenderWindow window(VideoMode(800, 600), "Render Window Demo", Style::Default);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+}
+
+void demo_ClosedEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "Close Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_ResizedEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "Resize Event Demo", Style::Resize | Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::Resized)
+			{
+				std::cout << "New Width: " << evnt.size.width << std::endl;
+				std::cout << "New height: " << evnt.size.height << std::endl;
+			}
+			else if (evnt.type == Event::Closed) window.close();
+			window.clear(Color::White);
+			window.display();
+		}
+	}
+}
+
+void demo_TextEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "TextEntered Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::TextEntered)
+			{
+				if (evnt.text.unicode < 128)
+				{
+					std::cout << "ASCII character typed: " << static_cast<char>(evnt.text.unicode) << std::endl;
+				}
+			}
+			else if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_KeyEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "KeyPressed Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::KeyPressed)
+			{
+				if (evnt.key.code == sf::Keyboard::T)
+				{
+					std::cout << "Key 't' pressed." << std::endl;
+				}
+			}
+			else if (evnt.type == Event::KeyReleased)
+			{
+				if (evnt.key.code == sf::Keyboard::T)
+				{
+					std::cout << "Key 't' released." << std::endl;
+				}
+			}
+			else if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_MouseWheelEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "MouseWheel Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+			{
+				std::cout << "wheel type: vertical" << std::endl;
+				std::cout << "wheel movement: " << evnt.mouseWheelScroll.delta << std::endl;
+			}
+			else if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_MouseButtonEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "MouseButton Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.mouseButton.button == sf::Mouse::Right)
+			{
+				std::cout << "the right button was pressed" << std::endl;
+			}
+			else if (evnt.mouseButton.button == sf::Mouse::Left)
+			{
+				std::cout << "the left button was pressed" << std::endl;
+			}
+			else if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_MouseMoveEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "MouseMove Event Demo", Style::Close);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			if (evnt.type == Event::MouseMoved)
+			{
+				std::cout << "New mouse x position: " << evnt.mouseMove.x << std::endl;
+				std::cout << "New mouse y position: " << evnt.mouseMove.y << std::endl;
+			}
+			else if (evnt.type == Event::Closed) window.close();
+		}
+	}
+}
+
+void demo_AllEvent()
+{
+	RenderWindow window(VideoMode(800, 600), "All Event Demo", Style::Default);
+
+	// Setting Framerate
+	window.setFramerateLimit(60);
+
+	// Setting position of window
+	window.setPosition(Vector2i(100, 100));
+
+	while (window.isOpen())
+	{
+		Event evnt;
+		while (window.pollEvent(evnt))
+		{
+			switch (evnt.type)
+			{
+			case (evnt.Closed):
+				window.close();
+				break;
+			case evnt.Resized:
+				std::cout << "new width: " << evnt.size.width << std::endl;
+				std::cout << "new height: " << evnt.size.height << std::endl;
+			case evnt.TextEntered:
+				if (evnt.text.unicode < 128)
+				{
+					std::cout << "ASCII character typed: " << static_cast<char>(evnt.text.unicode) << std::endl;
+				}
+			case evnt.KeyPressed:
+				if (evnt.key.code == sf::Keyboard::T)
+				{
+					std::cout << "Key 't' pressed." << std::endl;
+				}
+			case evnt.KeyReleased:
+				if (evnt.key.code == sf::Keyboard::T)
+				{
+					std::cout << "Key 't' released." << std::endl;
+				}
+			case evnt.MouseWheelScrolled:
+				if (evnt.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+				{
+					std::cout << "wheel type: vertical" << std::endl;
+					std::cout << "wheel movement: " << evnt.mouseWheelScroll.delta << std::endl;
+				}
+			case evnt.MouseButtonPressed:
+				if (evnt.mouseButton.button == sf::Mouse::Right)
+				{
+					std::cout << "the right button was pressed" << std::endl;
+				}
+				else if (evnt.mouseButton.button == sf::Mouse::Left)
+				{
+					std::cout << "the left button was pressed" << std::endl;
+				}
+			default:
+				break;
+			}
+			window.clear(Color::White);
+			window.display();
+		}
+	}
+}s
